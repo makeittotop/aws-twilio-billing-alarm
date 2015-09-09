@@ -24,14 +24,12 @@ for root, dirnames, filenames in os.walk(dir):
     matches.append(os.path.join(root, filename))
 
 for match in matches:
-  if not bucket.get_key(match):
-    print "Creating key: ", match, " in bucket: ", bucket_name
-    k = Key(bucket)
-    k.key = match
-    k.set_contents_from_filename(match)
-  else:
-    print "Key: ", match, " exists in bucket: ", bucket_name
+  #if not bucket.get_key(match):
+  print "Creating key: ", match, " in bucket: ", bucket_name
+  k = Key(bucket)
+  k.key = match
+  k.set_contents_from_filename(match)
+  #else:
+    #print "Key: ", match, " exists in bucket: ", bucket_name
 
 print "Done!"
-
-
