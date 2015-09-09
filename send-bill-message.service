@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# send_bill_message 
+#
+# chkconfig: 2345 90 60
+# description: starts/stops the send_bill_message_svc server
+
+PYTHON_HOME=/usr/bin
+PYTHON_APP=/usr/bin/send-billing-message
+LOG_PATH=/var/log/send-billing-message
+
+case "$1" in
+    start)
+        echo "Starting the bill monitoring server..."
+        $PYTHON_HOME/python $PYTHON_APP &>> $LOG_PATH/output.log &
+        ;;
+    restart)
+        echo "Stopping the bill monitoring server ..."
+        pgrep -lf send-billing-message | awk '{print $1}' | xargs -I pid kill -9 pid >> $LOG_PATH/output.log
+        echo "Starting the bill monitoring server ..."
+        $PYTHON_HOME/python $PYTHON_APP > $LOG_PATH/output.log &
+        ;;
+    stop)
+       echo "Stopping the bill monitoring server ..."
+       pgrep -lf send-billing-message | awk '{print $1}' | xargs -I pid kill -9 pid >> $LOG_PATH/output.log
+       ;;
+    status)
+       pid=$(pgrep -lf send-billing-message | awk '{print $1}')
+       if [[ -z "$pid" ]]
+       then
+           echo "Server is NOT running..."
+       else
+           echo "Server is running with pid $pid..."
+       fi
+       ;;
+    *)
+       echo "Usage $0 {start | stop | status | restart }"
+       exit 1
+esac
+

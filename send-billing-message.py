@@ -5,10 +5,9 @@ import boto.sqs
 import json
 from twilio.rest import TwilioRestClient
 
-import creds
-
-ACCOUNT_SID = creds.ACCOUNT_SID
-AUTH_TOKEN = creds.AUTH_TOKEN
+#import creds
+ACCOUNT_SID = "AC748702fc738d6f16455dd418b93a67d1"
+AUTH_TOKEN = "cc2ceaa0b0335037b72d132582fc3c88"
 
 def main():
   conn = boto.sqs.connect_to_region("ap-southeast-1")
